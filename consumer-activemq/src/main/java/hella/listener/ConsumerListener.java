@@ -3,7 +3,8 @@ package hella.listener;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
-import javax.jms.Message;
+import javax.jms.JMSException;
+import javax.jms.Session;
 import javax.jms.TextMessage;
 
 /**
@@ -14,20 +15,19 @@ import javax.jms.TextMessage;
 @Component
 public class ConsumerListener {
 
-    @JmsListener(destination ="${queue}" )
-    public void   getMessage(Message message){
+    @JmsListener(destination ="${queue}")
+    public void  getMessage(final TextMessage text, Session session){
 
         try {
-            if(message instanceof TextMessage) {
-
-                TextMessage textMessage = (TextMessage)message;
-                String   messageData = textMessage.getText();
-                System.out.println("consumer get message:"+messageData);
-            }
-
-
+            text.acknowledge();
+            System.out.println("consumer get the message:"+text.getText());
         }catch (Exception e){
-
+            //// 此不可省略 重发信息使用
+            try {
+                session.recover();
+            } catch (JMSException e1) {
+                e1.printStackTrace();
+            }
         }
 
     }

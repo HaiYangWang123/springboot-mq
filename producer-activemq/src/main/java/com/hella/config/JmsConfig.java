@@ -37,7 +37,7 @@ public class JmsConfig {
         //进行持久化配置  1:非持久化  2:持久化
         template.setDeliveryDelay(1);
         //客户签收模式
-       // template.setSessionAcknowledgeMode(4);
+       template.setSessionAcknowledgeMode(4);
         return template;
     }
 

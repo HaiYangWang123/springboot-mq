@@ -32,9 +32,9 @@ public class JmsConfig {
         JmsTemplate template = new JmsTemplate();
         template.setConnectionFactory(connectionFactory());
         //进行持久化配置  1:非持久化  2:持久化
-        //template.setDeliveryDelay(1);
+        //template.setDeliveryDelay(2);
         //客户签收模式
-        //template.setSessionAcknowledgeMode(4);
+        template.setSessionAcknowledgeMode(4);
         return template;
     }
 
@@ -45,8 +45,8 @@ public class JmsConfig {
         //设置链接数
         factory.setConcurrency("1-10");
         //重连间隔时间
-        //factory.setRecoveryInterval(1000L);
-        //factory.setSessionAcknowledgeMode(4);
+        factory.setRecoveryInterval(1000L);
+        factory.setSessionAcknowledgeMode(4);
         return factory;
     }
 
